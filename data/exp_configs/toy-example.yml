@@ -1,0 +1,48 @@
+global_options:
+- exp_prefix: toy-example
+- dataset_name: toy-example
+- label_select: people_count
+- hidden_layer_sizes:
+  - 128
+- hidden_layer_counts:
+  - 2
+- mask_init_method:
+  - random
+- regression_loss: False
+- simulate_pd_area_blur: False
+- simulate_directivity: False
+- mincam_sensor_gain: 0.0012243347290119763
+- mincam_sensor_saturation_val: 3.2
+- mincam_sensor_n_bits: 12
+- mincam_read_noise_std: 0.000250 # 250 uV
+- mask_blur_kernel_sigma: [0]
+- mask_min_value: 0.0
+- mask_max_value: 1.0
+- model_vert_fov: 70 # Only used when simulate_directivity is True
+- model_horiz_fov: 70 # See above
+- train_augmentations: True
+- batch_size:
+  - 128
+- jobs_per_gpu: 1 # machine-dependent
+
+0:
+- model_type: mincam
+- epochs: 6000
+- lrs:
+  - !!float 5e-4
+- cam_sizes: [4, 8] # A list of freeform pixel counts
+- img_sizes: [[128, 128], [128, 128]] # A list of [128, 128], regardless of the number of freeform pixels
+- checkpoint_every_n_epochs: 10
+- checkpoint_minibatches_until: -1
+- early_stop_epochs: 200
+
+1:
+- model_type: baseline
+- epochs: 6000
+- lrs:
+  - !!float 1e-4
+- cam_sizes: [[64, 64], [128, 128]] # A list of baseline camera resolutions
+- img_sizes: [[64, 64], [128, 128]]
+- checkpoint_every_n_epochs: 10
+- checkpoint_minibatches_until: -1
+- early_stop_epochs: 500

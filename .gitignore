@@ -1,0 +1,6 @@
+datasets/
+data/models/
+data/logs/
+data/models/
+
+__pycache__/
